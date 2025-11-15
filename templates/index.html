@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celebrity Connections - Wikipedia Path Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌟 Celebrity Connections</h1>
+            <p class="subtitle">Discover how famous celebrities are connected through Wikipedia</p>
+        </header>
+
+        <div class="search-section">
+            <div class="search-box">
+                <div class="input-group">
+                    <label for="celebrity1">First Celebrity</label>
+                    <select id="celebrityDropdown1" class="celebrity-dropdown">
+                        <option value="">-- Select a famous celebrity --</option>
+                    </select>
+                    <div class="or-divider">OR</div>
+                    <input type="text" id="celebrity1" placeholder="Search for any celebrity..." autocomplete="off">
+                    <div id="suggestions1" class="suggestions"></div>
+                    <div id="info1" class="celebrity-info hidden"></div>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="input-group">
+                    <label for="celebrity2">Second Celebrity</label>
+                    <select id="celebrityDropdown2" class="celebrity-dropdown">
+                        <option value="">-- Select a famous celebrity --</option>
+                    </select>
+                    <div class="or-divider">OR</div>
+                    <input type="text" id="celebrity2" placeholder="Search for any celebrity..." autocomplete="off">
+                    <div id="suggestions2" class="suggestions"></div>
+                    <div id="info2" class="celebrity-info hidden"></div>
+                </div>
+            </div>
+
+            <button id="findConnection" class="btn-primary">Find Connection</button>
+        </div>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Searching through Wikipedia...</p>
+        </div>
+
+        <div id="result" class="result hidden">
+            <div class="result-header">
+                <h2>Connection Found!</h2>
+                <p class="connection-length">Path length: <span id="pathLength">0</span> steps</p>
+            </div>
+            <div id="pathVisualization" class="path-visualization"></div>
+        </div>
+
+        <div id="error" class="error hidden">
+            <p id="errorMessage"></p>
+        </div>
+
+        <div class="info-section">
+            <h3>How it works</h3>
+            <p>This tool uses the Wikipedia API to find the shortest path between two celebrities through Wikipedia article links. It employs a breadth-first search (BFS) algorithm to discover connections.</p>
+            
+            <p><strong>What is a connection?</strong> Two celebrities are connected when one person's Wikipedia page links to another's. The tool finds the shortest chain of these Wikipedia links between any two people.</p>
+            
+            <div style="background: #f8f9fa; border-radius: 15px; padding: 20px; margin: 20px 0; border-left: 4px solid #667eea;">
+                <p style="margin-bottom: 15px; font-weight: 600; color: #333;">🔗 <span id="exampleCeleb1">Brad Pitt</span> → Connection(s) → <span id="exampleCeleb2">BTS</span></p>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="background: #11998e; color: white; padding: 12px; border-radius: 10px;">
+                        <strong>Start: <span id="exampleStart">Brad Pitt</span></strong>
+                        <div style="font-size: 0.85rem; opacity: 0.9; margin-top: 5px;" id="exampleStartText">His Wikipedia page links to...</div>
+                    </div>
+                    <div style="text-align: center; color: #667eea; font-size: 1.2rem;">↓</div>
+                    <div style="background: #667eea; color: white; padding: 12px; border-radius: 10px;">
+                        <strong>Connection(s)</strong>
+                        <div style="font-size: 0.85rem; opacity: 0.9; margin-top: 5px;">These pages link to...</div>
+                    </div>
+                    <div style="text-align: center; color: #667eea; font-size: 1.2rem;">↓</div>
+                    <div style="background: #eb3349; color: white; padding: 12px; border-radius: 10px;">
+                        <strong>Destination: <span id="exampleEnd">BTS</span></strong>
+                        <div style="font-size: 0.85rem; opacity: 0.9; margin-top: 5px;">Connection found!</div>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">Each arrow represents a Wikipedia link. The tool finds the shortest path of links connecting any two celebrities.</p>
+            </div>
+            
+            <p><strong>Try it:</strong> Search for any two famous people and see how they're connected!</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
